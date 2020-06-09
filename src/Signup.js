@@ -27,7 +27,7 @@ function Signup(props) {
           <br />
           <Form.Input name="Password"  required label='Password'  type="password" placeholder="Password"  onChange={props.handleChange} /> 
           <br />
-          <Form.Input name="Phonenumber"  required label='Phonenumber'  type='text' placeholder="Phone NO"  onChange={props.handleChange} /> 
+          <Form.Input name="Phonenumber"  required label='Phonenumber'  type='text' placeholder="Phone NO" maxLength="10"   onChange={props.handleChange} /> 
           <br />
           
       <br />

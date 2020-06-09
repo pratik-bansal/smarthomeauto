@@ -9,6 +9,8 @@ import { BrowserRouter as Router, Link, Route, withRouter } from "react-router-d
 import axios from "axios";
 import Login from './Login';
 import Signup from './Signup' ;
+import Mainactivity from './Mainactivity' ;
+import Profile from './Profile' ;
 
 
 
@@ -42,8 +44,7 @@ class App extends React.Component {
     super(props)
     this.state = {  name: "", email: "", password: "", phone: "", uid: "" }
     this.state.db = {
-      books: [],
-      mybooks: []
+      books: []
     }
 
   }
@@ -87,9 +88,9 @@ class App extends React.Component {
           email: email
         })
         this.storeuserdata();
-        this.books();
+        // this.books();
 
-        this.props.history.push('/');
+        this.props.history.push('/mainactivity');
 
 
       } else {
@@ -131,7 +132,7 @@ class App extends React.Component {
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((result) => {
       // This gives you a Google Access Token. You can use it to access the Google API.
 
-      this.props.history.push('/');
+      this.props.history.push('/mainactivity');
       // ...
     }).catch(function (error) {
       // Handle Errors here.
@@ -181,6 +182,7 @@ class App extends React.Component {
       // This gives you a Google Access Token. You can use it to access the Google API.
       var user = result.user;
       this.setState({
+        photoURL:user.photoURL,
         name: user.displayName
       })
       this.setState({
@@ -188,7 +190,7 @@ class App extends React.Component {
       })
 
 
-      this.props.history.push('/login');
+      this.props.history.push('/mainactivity');
 
       // ...
     }).catch(function (error) {
@@ -222,7 +224,8 @@ class App extends React.Component {
       <Route path="/" exact render={() => <Home ></Home>} />
       <Route path="/login"  render={()=><Login googleLogin={this.googleLogin.bind(this)}></Login>}></Route>
       <Route path="/signup"  render={()=><Signup signup={this.signup.bind(this)} handleChange={this.handleChange.bind(this)}></Signup>}></Route>
-      
+      <Route path="/mainactivity" exact render={() => <Mainactivity logout={this.logout} username={this.state.name} ></Mainactivity>} />
+      <Route path="/profile" exact render={() => <Profile  logout={this.logout} photoURL={this.state.photoURL} username={this.state.name} phone={this.state.phone} handleChange={this.handleChange.bind(this)} handlephoneChange={this.handlephoneChange.bind(this)} updateuser={this.updateuser} ></Profile>} />
     </div>
     );
   }
